@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="456" height="456" viewBox="0 0 456 456"
+     version="1.1"
+     xmlns="http://www.w3.org/2000/svg">
+
+	<!-- Texte SCTS -->
+	<text x="50%" y="40%"
+		  text-anchor="middle"
+		  dominant-baseline="middle"
+		  font-family="Segoe UI, Arial, sans-serif"
+		  font-size="80"
+		  font-weight="bold"
+		  fill="#FFFFFF">
+		SCTS
+	</text>
+
+	<!-- Texte ARCA -->
+	<text x="50%" y="65%"
+		  text-anchor="middle"
+		  dominant-baseline="middle"
+		  font-family="Segoe UI, Arial, sans-serif"
+		  font-size="80"
+		  font-weight="bold"
+		  fill="#FFFFFF">
+		ARCA
+	</text>
+
+</svg>

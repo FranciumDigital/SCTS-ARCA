@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCTS___Android_Remote_Control_Application.SettingsPage"
+             Shell.NavBarIsVisible="False"
+             Title="Paramètres">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="25">
+
+            <!-- ===== SECTION COMPTE ===== -->
+            <Border BackgroundColor="{StaticResource White}" StrokeThickness="1" Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="18"/>
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="COMPTE"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource PrimaryDark}"/>
+
+                    <Label Text="LICENCE" FontSize="12"/>
+                    <Label Text="420130" FontAttributes="Bold"/>
+
+                    <Label Text="UTILISATEUR" FontSize="12"/>
+                    <Label Text="LETRANGE Robin" FontAttributes="Bold"/>
+
+                    <Button Text="Déconnexion" 
+                            x:Name="LogoutButton" 
+                            BackgroundColor="{StaticResource Tertiary}" 
+                            TextColor="White"
+                            CornerRadius="12" 
+                            FontSize="18" 
+                            HeightRequest="50" 
+                            HorizontalOptions="Fill"
+                            Clicked="LogoutButtonClicked"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+
+            <!-- ===== SECTION RÉSEAU ===== -->
+            <Border BackgroundColor="{StaticResource White}" StrokeThickness="1" Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="18"/>
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="RÉSEAU"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource PrimaryDark}"/>
+
+                    <Label Text="Adresse IP du serveur" FontSize="12"/>
+                    <Entry Placeholder="192.168.1.100"
+                           Keyboard="Text"/>
+
+                        <Label Text="Port" FontSize="12"/>
+                    <Entry Placeholder="5000"
+                           Keyboard="Numeric"/>
+
+                    <Button Text="Tester la connexion"
+                            BackgroundColor="{StaticResource Tertiary}"
+                            TextColor="{StaticResource White}"
+                            CornerRadius="12"
+                            Clicked="TestButtonClicked"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+
+            <!-- ===== SECTION APPARENCE ===== -->
+            <Border BackgroundColor="{StaticResource White}" StrokeThickness="1" Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="18"/>
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="APPARENCE"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource PrimaryDark}"/>
+
+                    <HorizontalStackLayout HorizontalOptions="Fill">
+                        <Label Text="Mode sombre"
+                               VerticalOptions="Center"/>
+                        <Switch IsToggled="False"/>
+                    </HorizontalStackLayout>
+
+                    <Label Text="Langue"/>
+                    <Picker>
+                        <Picker.Items>
+                            <x:String>Français</x:String>
+                            <x:String>English</x:String>
+                            <x:String>Deutsch</x:String>
+                        </Picker.Items>
+                    </Picker>
+
+                </VerticalStackLayout>
+            </Border>
+
+
+            <!-- ===== SECTION A PROPOS ===== -->
+            <Border BackgroundColor="{StaticResource White}" StrokeThickness="1" Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="18"/>
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label Text="À PROPOS"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource PrimaryDark}"/>
+
+                    <Label Text="SCTS - ARCA"
+                           FontAttributes="Bold"/>
+
+                    <Label Text="Version 0.2.XXX"/>
+
+                    <Button Text="Vérifier les mises à jour"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource PrimaryDark}"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

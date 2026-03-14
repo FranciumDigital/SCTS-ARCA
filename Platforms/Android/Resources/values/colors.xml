@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Couleur principale (bleu moyen) -->
+	<color name="colorPrimary">#1F8EDB</color>
+	<color name="colorPrimaryDark">#0B3C6F</color>
+	<color name="colorAccent">#3ABEFF</color>
+</resources>

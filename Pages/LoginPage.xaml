@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCTS___Android_Remote_Control_Application.LoginPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             Title="Connexion">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="30" VerticalOptions="Center">
+
+            <Border BackgroundColor="{StaticResource White}"
+                    StrokeThickness="1"
+                    Padding="25">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="22"/>
+                </Border.StrokeShape>
+
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource PrimaryDark}"
+                            Opacity="0.25"
+                            Radius="15"
+                            Offset="0,6" />
+                </Border.Shadow>
+
+                <VerticalStackLayout Spacing="20">
+
+                    <!-- LOGO -->
+                    <Border BackgroundColor="Transparent"
+                            StrokeThickness="0"
+                            HorizontalOptions="Center">
+                        <Border.Shadow>
+                            <Shadow Brush="{StaticResource PrimaryDark}" Opacity="0.25" Radius="15" Offset="0,6" />
+                        </Border.Shadow>
+                        <Image Source="applogowhitebg.png"
+                               HeightRequest="120"
+                               Aspect="AspectFit"
+                               HorizontalOptions="Center"/>
+                    </Border>
+
+                    <Label Text="Connexion"
+                           FontSize="26"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource PrimaryDark}"/>
+
+                    <!-- LICENCE -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Numéro de licence"/>
+                        <Entry Placeholder="123456"
+                               Keyboard="Text"
+                               ClearButtonVisibility="WhileEditing"
+                               x:Name="licenceEntry"/>
+                        <Label Text="Entrez un numéro de licence"
+                               TextColor="Red"
+                               FontSize="12"
+                               x:Name="licenceErrorLabel"
+                               IsVisible="False"/>
+                    </VerticalStackLayout>
+
+                    <!-- PASSWORD -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Mot de passe"/>
+                        <Entry Placeholder="••••••"
+                               IsPassword="True"
+                               x:Name="passwordEntry"/>
+                        <Label Text="Entrez un mot de passe"
+                               TextColor="Red"
+                               FontSize="12"
+                               x:Name="passwordErrorLabel"
+                               IsVisible="False"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Erreur de mot de passe ou licence invalide"
+                               TextColor="Red"
+                               FontSize="12"
+                               IsVisible="False"
+                               x:Name="generalErrorLabel"/>
+                    </VerticalStackLayout>
+
+                    <!-- REMEMBER ME -->
+                    <!--<HorizontalStackLayout Spacing="10">
+                        <CheckBox/>
+                        <Label Text="Se souvenir de moi"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>-->
+
+                    <!-- LOGIN BUTTON -->
+                    <Button Text="Se connecter"
+                            BackgroundColor="{StaticResource Tertiary}"
+                            TextColor="{StaticResource White}"
+                            CornerRadius="14"
+                            FontSize="18"
+                            HeightRequest="50"
+                            Clicked="LoginButtonClicked"/>
+
+                    <!-- FORGOT PASSWORD -->
+                    <Label Text="Mot de passe oublié ?"
+                           TextColor="{StaticResource PrimaryDark}"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnForgotPasswordTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <!-- REGISTER -->
+                    <Button Text="Créer un compte"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource PrimaryDark}"
+                            BorderColor="{StaticResource PrimaryDark}"
+                            BorderWidth="1"
+                            CornerRadius="14"
+                            Clicked="CreateAccountButtonClicked"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
