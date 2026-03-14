@@ -1,62 +1,76 @@
-# SCTS - Android Remote Control Application
+# SCTS - Android Remote Control Application (SCTS – ARCA)
 
-Application .NET MAUI pour contrôler des appareils Android via Bluetooth (RFCOMM / SPP).
+Application .NET MAUI pour le chronométrage de runs sur voies de vitesse et le contrôle d'appareils via Bluetooth (RFCOMM / SPP).
 
-## Description
+## Résumé
 
-Cette application permet d'envoyer des commandes texte sur des périphériques Bluetooth classiques (SPP) en utilisant une adresse MAC et un socket RFCOMM.
+Application mobile simple pour démarrer/arrêter un chronomètre, enregistrer les temps et consulter l'historique. Elle inclut un service Android natif capable d'envoyer des commandes texte à des périphériques Bluetooth SPP (RFCOMM).
+
+Fonctionnalités principales
+- Chronomètre avec démarrage/arrêt, réinitialisation et enregistrement des temps.
+- Historique des temps sauvegardé localement (Preferences, JSON).
+- Pages : `LoginPage`, `CreateAccountPage`, `MainPage`, `RunsPage`, `HistoryPage`, `SettingsPage`.
+- Service Android : `Platforms/Android/BluetoothService.cs` (envoi de texte via RFCOMM).
 
 ## Prérequis
 
 - .NET 10 SDK
-- Visual Studio 2022/2023 (ou version compatible MAUI) avec le workload MAUI installé
-- Un appareil Android (ou un émulateur avec support Bluetooth) pour tester la fonctionnalité Bluetooth
+- Visual Studio 2022/2023 (ou compatible MAUI) avec workload MAUI
+- Appareil Android pour tester (ou émulateur avec support Bluetooth)
 
-## Configuration Android importante
+## Permissions Android
 
-Sur Android 12+ (API 31 / Android S) et supérieur, l'accès aux API Bluetooth requiert des permissions au runtime. Le manifeste contient déjà la permission suivante :
+Le manifeste contient les permissions Bluetooth, y compris `android.permission.BLUETOOTH_CONNECT`. Sur Android 12+ (API 31+), cette permission doit aussi être accordée au runtime.
 
-- `android.permission.BLUETOOTH_CONNECT`
+- Déclarer la permission dans `Platforms/Android/AndroidManifest.xml` n'est pas suffisant.
+- Avant d'appeler les APIs Bluetooth, l'application doit vérifier/obtenir `BLUETOOTH_CONNECT` à l'exécution.
 
-Cependant, déclarer la permission dans `Platforms/Android/AndroidManifest.xml` n'est pas suffisant : l'application doit demander et obtenir la permission à l'exécution avant d'appeler les APIs Bluetooth (ex. `CreateRfcommSocketToServiceRecord`, `ConnectAsync`).
-
-Sans cette permission, l'appel natif lance une exception Java (p.ex. `SecurityException`) qui remonte en .NET comme `Android.Runtime.JavaProxyThrowable`.
-
-### Recommandations
-
-- Avant d'exécuter des opérations Bluetooth, vérifier et demander `BLUETOOTH_CONNECT` depuis une `Activity` ou via un flux de permissions MAUI.
-- Gérer le résultat de la demande de permission et réessayer l'opération seulement si la permission est accordée.
+Remarque : le service `BluetoothService` vérifie la permission et journalise les erreurs mais ne demande pas la permission lui‑même. La demande doit être déclenchée depuis l'UI (Activity/Page).
 
 ## Construire et exécuter
 
-1. Ouvrir la solution dans Visual Studio (ou via `dotnet build`).
-2. Sélectionner la startup project `SCTS - Android Remote Control Application` et la configuration Android cible.
+1. Ouvrir la solution dans Visual Studio.
+2. Sélectionner le projet Android comme startup.
 3. Déployer sur un appareil Android avec Bluetooth activé.
 
-Exemple de commande CLI :
+Commande CLI (exemple) :
 
 ```bash
 dotnet build -t:Run -f net10-android
 ```
 
-(Note : l'utilisation de `dotnet` pour déployer sur un appareil Android peut nécessiter des arguments supplémentaires et un environnement configuré.)
+## Utilisation
 
-## Points d'attention dans le code
+- Se connecter via `LoginPage` (valeurs de test intégrées : licence `420130`, mot de passe `123456`).
+- Depuis l'onglet `Accueil`, appuyer sur `Démarrer un run` pour ouvrir `RunsPage`.
+- Sur `RunsPage` : démarrer/arrêter le chronomètre, réinitialiser, puis `Enregistrer le temps`. Les temps sont sauvegardés et visibles dans `HistoryPage`.
 
-- Le service de communication Bluetooth se trouve dans `Platforms/Android/BluetoothService.cs`.
-  - Il vérifie désormais la permission `BLUETOOTH_CONNECT` pour Android 12+ et journalise les exceptions au lieu de les ignorer.
-  - La demande de permission à l'utilisateur n'est pas effectuée automatiquement par le service : c'est une action d'interface utilisateur qui doit être déclenchée depuis une `Activity`/Page.
-- Interface publique : `IBluetoothService.SendTextAsync(string macAddress, string message)`.
+## Architecture / emplacement du code
+
+- Chronomètre et historique : `Pages/RunsPage.xaml(.cs)` et `Pages/HistoryPage.xaml(.cs)` (utilisent `Preferences` pour stocker les temps).
+- Auth / inscription : `Pages/LoginPage.xaml(.cs)`, `Pages/CreateAccountPage.xaml(.cs)` (simulées).
+- Bluetooth Android : `Platforms/Android/BluetoothService.cs` implémente `IBluetoothService.SendTextAsync`.
+
+## Sécurité et limitations
+
+- Authentification et données utilisateur sont actuellement simulées (valeurs en dur). Pas de backend.
+- Les fonctionnalités réseau (tester la connexion) et la logique multi-voie ne sont pas implémentées.
 
 ## Débogage
 
-- Si vous voyez `Android.Runtime.JavaProxyThrowable` dans les logs/débogueur, consultez les logs Android (`Logcat`) pour le message complet journalisé par `BluetoothService` (le texte de l'exception Java y sera visible).
-- Vérifiez que l'app a la permission `BLUETOOTH_CONNECT` sur l'appareil via les paramètres d'application.
+- Consultez `Logcat` pour les messages Android, en particulier les erreurs journalisées par `BluetoothService`.
+- En cas d'`Android.Runtime.JavaProxyThrowable`, le log enregistré contient la cause Java (p.ex. `SecurityException` si permission manquante).
+
+## Prochaines améliorations suggérées
+
+- Implémenter la demande runtime de permission `BLUETOOTH_CONNECT` depuis l'UI.
+- Connecter l'enregistrement d'un temps à l'envoi automatique via Bluetooth (utiliser `IBluetoothService`).
+- Ajouter prise en charge de deux voies (Voie A / Voie B) et export CSV de l'historique.
 
 ## Contributions
 
-Contributions bienvenues via pull requests : corriger des bugs, améliorer la gestion des permissions ou ajouter des tests.
+Pull requests bienvenues. Merci d'ajouter des tests et d'expliquer les changements dans la description.
 
 ## Licence
 
-Indiquer la licence du projet (ex. MIT) ici.
+Préciser la licence du projet (par ex. MIT).

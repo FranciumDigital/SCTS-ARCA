@@ -4,10 +4,32 @@
              x:Class="SCTS___Android_Remote_Control_Application.RunsPage"
              Title="Runs">
 
-    <VerticalStackLayout>
-        <Label 
-            Text="RUNS"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <Label Text="CHRONOMÈTRE" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+            <Label x:Name="TimerLabel" Text="00:00.000" FontSize="48" HorizontalOptions="Center" TextColor="Black"/>
+
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Button x:Name="StartStopButton" Text="Démarrer" WidthRequest="140" Clicked="StartStopButtonClicked"/>
+                <Button x:Name="ResetButton" Text="Réinitialiser" WidthRequest="140" Clicked="ResetButtonClicked"/>
+            </HorizontalStackLayout>
+
+            <Button Text="Enregistrer le temps" BackgroundColor="{StaticResource Tertiary}" TextColor="{StaticResource White}" CornerRadius="12" Clicked="SaveTimeButtonClicked"/>
+
+            <Label Text="Historique des temps" FontSize="18" FontAttributes="Bold"/>
+            <CollectionView x:Name="HistoryCollection" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="{StaticResource Gray50}" StrokeThickness="1" Stroke="{StaticResource Gray200}" Padding="12" Margin="0,6">
+                            <Label Text="{Binding}"/>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>
